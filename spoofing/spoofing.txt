@@ -1,1 +1,17 @@
-Briefly explain the vulnerability and why the secure version prevents the vulnerability.
+- Briefly explain the vulnerability and why the secure version prevents the vulnerability.
+By default, the browser sends session cookie data to all websites, and the vulnerability here is exactly around this.
+The 'insecure.js' server does not specificy that cookie be sent with 'httponly', which makes the session ID easily available
+to clients making calls the server.
+Also, 'insecure.js' server does not restrict data transfer only to the same site, and hence the same client calling the server.
+This vulnerability allows external clients (not the current one) to make calls to the server and get the cookie data.
+This could lead to confidential data leak through the use of malicious websites that make calls the server.
+
+
+- Which CIA properties do you think Spoofing violates?
+Spoofing violates the following CIA properties:
+* Confidentiality: Spoofing can compromise confidentiality by allowing unauthorized access to sensitive information.
+For example, if an attacker spoofs their identity to gain access to a secure system, they could potentially 
+access confidential data.
+* Integrity: Spoofing attacks can undermine data integrity by allowing unauthorized modification of data. 
+For instance, an attacker could spoof a legitimate source and alter data in transit or at rest, 
+leading to data corruption or unauthorized changes.
