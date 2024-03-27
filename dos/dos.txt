@@ -1,2 +1,14 @@
 - Briefly explain the vulnerability and why the secure version prevents the vulnerability.
+The insecure.js server exposes an API which allows fetching user data for a given '_id' query parameter.
+The mongo query for matching the '_id' for a document requires only an ObjectId string to be passed as an argument.
+A malicious user here, can passed arbitrary string or values to the mongo query using the API, causing the mongo query function to throw an unhandled
+exception and crash the server. The malicious user can keep doing this multiple times and crash all server instances.
+The secure.js server, however, uses a try-catch block to handle this exception gracefully, allowing to server to stay up even if invalid inputs
+are received.
+
 - What additional security mechanisms can you incorporate to prevent such attacks?
+Input Validation: We can implement robust input validation to ensure that only valid inputs are accepted by the API. 
+For example, you can validate that the '_id' parameter is a valid ObjectId string before passing it to the MongoDB query.
+
+Rate Limiting: We could implement rate limiting to restrict the number of requests that can be made to the API within a certain time period. 
+This can help mitigate the impact of a malicious user attempting to repeatedly crash the server by sending invalid inputs.

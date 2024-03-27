@@ -1,3 +1,19 @@
-Briefly explain the vulnerability and why the secure version prevents the vulnerability.
-Which CIA property does tampering violate?
-What additional security mechanisms can you incorporate?
+- Briefly explain the vulnerability and why the secure version prevents the vulnerability.
+The insecure.js server does not preprocess the API query input and passes it directly to the mongo query.
+This can lead to possible NoSQL injection as observed by passing a value of '[$ne]=' to the API. This leads to the execution of this mongo query,
+and the information is fetched from the database even though the expected conditions for finding a document are not met.
+The secure.js server, however, sanitizes the input query string and removes non-alphanumeric characters from it before passing it to the mongo query.
+This makes sure that NoSQL injection is not possible on the server.
+
+
+- Which CIA property does Information Disclosure violate?
+Confidentiality: Information disclosure violates confidentiality when unauthorized individuals or systems gain access to sensitive or 
+confidential information. This can lead to the exposure of private data, trade secrets, or classified information.
+
+Integrity: Information disclosure can also compromise integrity by allowing unauthorized parties to modify or manipulate data. 
+This could involve altering records, tampering with transactions, or introducing false information into a system.
+
+
+- What additional security mechanisms can you incorporate?
+We can add user authentication on the server, which would allow only authenticated users from calling the server APIs and hence
+restrict access to data and its manipulation.

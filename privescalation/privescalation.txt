@@ -1,0 +1,15 @@
+- Briefly explain the vulnerability and why the secure version prevents the vulnerability.
+The insecure.js server provides a functionality for updating a user's role (given the user id and new role) only if the user is an admin.
+The server uses the input user id to check if the user is an admin, and then allows access. The problem here is that a malicious user who has 
+access to the admin's user id can impersonate an admin by providing the admin user id and change the admin's role to possibile lower priviledge role.
+The insecure.js server deals with vulnerability by storing the logged in user id using session. Before actually changing a user's role,
+the server validates the user id from the session and checks if the current user is indeed the logged in user. If this is validated, only then
+is the role of a user changed.
+
+
+- What additional security mechanisms can you incorporate to prevent such attacks?
+Encryption: We could encrypt sensitive data such as user ids, session tokens, and role information both in transit and at rest to 
+prevent unauthorized access or tampering. We could use hashing such as MD5 hashing or use encyption algorthims like SHA 256.
+
+Input Validation: We could implement strict input validation to ensure that the user id provided for role updates is valid and belongs
+to the logged-in user. This helps prevent injection attacks and ensures that only legitimate user ids can be used for role updates.
